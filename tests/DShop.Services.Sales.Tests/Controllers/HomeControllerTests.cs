@@ -2,7 +2,6 @@ using AutoFixture;
 using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Controllers;
 using DShop.Services.Sales.Infrastructure;
-using DShop.Services.Sales.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

@@ -1,9 +1,6 @@
-using System.Runtime.InteropServices.ComTypes;
 using Autofac;
-using DShop.Services.Sales.Core.Repositories;
 using DShop.Services.Sales.Infrastructure.EF;
 using DShop.Services.Sales.Infrastructure.EF.Repositories;
-using DShop.Services.Sales.Infrastructure.InMemory.Repositories;
 
 namespace DShop.Services.Sales.Infrastructure
 {

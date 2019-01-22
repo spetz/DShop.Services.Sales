@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using DShop.Common.Dispatchers;
 using DShop.Common.Messages;
 using DShop.Common.Types;
-using DShop.Services.Sales.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DShop.Services.Sales.Controllers
@@ -18,7 +17,7 @@ namespace DShop.Services.Sales.Controllers
             _dispatcher = dispatcher;
         }
         
-        protected ActionResult<T> Single<T>(T model)
+        protected ActionResult<T> Result<T>(T model)
         {
             if (model == null)
             {

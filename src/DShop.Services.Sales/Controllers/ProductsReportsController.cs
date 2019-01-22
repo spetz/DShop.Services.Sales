@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Infrastructure;
-using DShop.Services.Sales.Services;
 using DShop.Services.Sales.Services.Commands;
 using DShop.Services.Sales.Services.Dto;
 using DShop.Services.Sales.Services.Queries;
@@ -19,7 +17,7 @@ namespace DShop.Services.Sales.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductsReportDto>> Get([FromRoute] GetProductsReport query)
-            => Single(await QueryAsync(query));
+            => Result(await QueryAsync(query));
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateProductsReport command)

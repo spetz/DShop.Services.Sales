@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DShop.Services.Sales.Core.Domain;
 using DShop.Services.Sales.Core.Repositories;
-using DShop.Services.Sales.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace DShop.Services.Sales.Infrastructure.Database.EF.Repositories
+namespace DShop.Services.Sales.Infrastructure.EF.Repositories
 {
     public class ProductRepository : IProductRepository, IEfRepository
     {

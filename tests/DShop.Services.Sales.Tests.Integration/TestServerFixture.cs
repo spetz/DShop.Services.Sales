@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace DShop.Services.Sales.Tests.EndToEnd
+namespace DShop.Services.Sales.Tests.Integration
 {
     public class TestServerFixture : IDisposable
     {

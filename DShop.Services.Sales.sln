@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DShop.Services.Sales", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8067E085-8081-4A14-9AB5-858528BF9342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DShop.Services.Sales.Tests.EndToEnd", "tests\DShop.Services.Sales.Tests.EndToEnd\DShop.Services.Sales.Tests.EndToEnd.csproj", "{90849095-C177-40DD-8B8A-2968AAA8D5F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DShop.Services.Sales.Tests.Integration", "tests\DShop.Services.Sales.Tests.Integration\DShop.Services.Sales.Tests.Integration.csproj", "{90849095-C177-40DD-8B8A-2968AAA8D5F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DShop.Services.Sales.Tests", "tests\DShop.Services.Sales.Tests\DShop.Services.Sales.Tests.csproj", "{2ADD689A-207F-460C-8EBF-86E40616AEFB}"
 EndProject

@@ -1,4 +1,4 @@
-namespace DShop.Services.Sales.Infrastructure.Database.EF.Repositories
+namespace DShop.Services.Sales.Infrastructure.EF.Repositories
 {
     public interface IEfRepository
     {

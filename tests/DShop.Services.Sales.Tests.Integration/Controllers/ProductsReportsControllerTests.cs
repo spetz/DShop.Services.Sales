@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DShop.Services.Sales.Services.Commands;
@@ -8,7 +7,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace DShop.Services.Sales.Tests.EndToEnd.Controllers
+namespace DShop.Services.Sales.Tests.Integration.Controllers
 {
     public class ProductsReportsControllerTests : IClassFixture<TestServerFixture>
     {

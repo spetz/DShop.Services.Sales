@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using DShop.Services.Sales.Core.Domain;
 using DShop.Services.Sales.Core.Repositories;
-using DShop.Services.Sales.Infrastructure.EF;
 
-namespace DShop.Services.Sales.Infrastructure.Database.EF.Repositories
+namespace DShop.Services.Sales.Infrastructure.EF.Repositories
 {
     public class OrderRepository : IOrderRepository, IEfRepository
     {

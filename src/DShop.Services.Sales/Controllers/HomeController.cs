@@ -1,3 +1,4 @@
+using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Services;
 using Microsoft.AspNetCore.Mvc;

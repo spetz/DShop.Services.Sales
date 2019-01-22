@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Core.Repositories;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Infrastructure.EF;
@@ -40,6 +41,7 @@ namespace DShop.Services.Sales
         {
             var builder = new ContainerBuilder();
             builder.Populate(services);
+            builder.AddDispatchers();
             builder.RegisterModule<InfrastructureModule>();
             Container = builder.Build();
 

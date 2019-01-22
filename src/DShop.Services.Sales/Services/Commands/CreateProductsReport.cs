@@ -1,4 +1,5 @@
 using System;
+using DShop.Common.Messages;
 using Newtonsoft.Json;
 
 namespace DShop.Services.Sales.Services.Commands

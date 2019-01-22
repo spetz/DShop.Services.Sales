@@ -1,4 +1,7 @@
 using System.Threading.Tasks;
+using DShop.Common.Dispatchers;
+using DShop.Common.Messages;
+using DShop.Common.Types;
 using DShop.Services.Sales.Services;
 using Microsoft.AspNetCore.Mvc;
 

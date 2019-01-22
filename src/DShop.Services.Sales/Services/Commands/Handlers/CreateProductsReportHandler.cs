@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using DShop.Common.Handlers;
+using DShop.Common.RabbitMq;
 using DShop.Services.Sales.Core.Factories;
 using DShop.Services.Sales.Core.Repositories;
 
@@ -22,7 +24,7 @@ namespace DShop.Services.Sales.Services.Commands.Handlers
             _productsReportFactory = productsReportFactory;
         }
         
-        public async Task HandleAsync(CreateProductsReport command)
+        public async Task HandleAsync(CreateProductsReport command, ICorrelationContext context)
         {
             var report = _productsReportFactory.Create(command.Id,
                 await _productRepository.GetAllAsync(),

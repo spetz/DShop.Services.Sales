@@ -1,4 +1,5 @@
 using AutoFixture;
+using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Controllers;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Services;

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DShop.Common.Dispatchers;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Services;
 using DShop.Services.Sales.Services.Commands;

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DShop.Common.Handlers;
 using DShop.Common.RabbitMq;
@@ -9,26 +10,28 @@ namespace DShop.Services.Sales.Services.Commands.Handlers
     public class CreateProductsReportHandler : ICommandHandler<CreateProductsReport>
     {
         private readonly IProductRepository _productRepository;
-        private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductsReportRepository _productsReportRepository;
         private readonly IProductsReportFactory _productsReportFactory;
 
         public CreateProductsReportHandler(IProductRepository productRepository,
-            IOrderItemRepository orderItemRepository,
+            IOrderRepository orderRepository,
             IProductsReportRepository productsReportRepository,
             IProductsReportFactory productsReportFactory)
         {
             _productRepository = productRepository;
-            _orderItemRepository = orderItemRepository;
+            _orderRepository = orderRepository;
             _productsReportRepository = productsReportRepository;
             _productsReportFactory = productsReportFactory;
         }
         
         public async Task HandleAsync(CreateProductsReport command, ICorrelationContext context)
         {
+            var products = _productRepository.GetAllAsync();
+            var orders = _orderRepository.GetAllAsync();
+            await Task.WhenAll(products, orders);
             var report = _productsReportFactory.Create(command.Id,
-                await _productRepository.GetAllAsync(),
-                await _orderItemRepository.GetAllAsync(), command.MaxRank);
+                products.Result.ToList(), orders.Result.ToList(), command.MaxRank);
             await _productsReportRepository.AddAsync(report);
         }
     }

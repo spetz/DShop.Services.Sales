@@ -34,14 +34,14 @@ namespace DShop.Services.Sales.Tests.Factories
         public void create_should_return_report()
         {
             var fixture = new Fixture();
-            var products = fixture.CreateMany<Product>();
-            var orderItems = fixture.CreateMany<OrderItem>();
+            var products = fixture.CreateMany<Product>().ToList();
+            var orders = fixture.CreateMany<Order>().ToList();
             var sales = products.Select(p => CreateSales(p, fixture.Create<int>()));
             var reportFactory = new ProductsReportFactory(_productSalesCalculatorMock.Object);
-            _productSalesCalculatorMock.Setup(x => x.Calculate(products, orderItems))
+            _productSalesCalculatorMock.Setup(x => x.Calculate(products, orders))
                 .Returns(sales);
 
-            var report = reportFactory.Create(Guid.NewGuid(), products, orderItems, 3);
+            var report = reportFactory.Create(Guid.NewGuid(), products, orders, 3);
 
             report.Should().NotBeNull();
         }

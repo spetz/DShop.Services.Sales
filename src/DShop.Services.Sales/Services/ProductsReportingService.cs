@@ -11,17 +11,17 @@ namespace DShop.Services.Sales.Services
     public class ProductsReportingService : IProductsReportingService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductsReportRepository _productsReportRepository;
         private readonly IProductsReportFactory _productsReportFactory;
 
         public ProductsReportingService(IProductRepository productRepository,
-            IOrderItemRepository orderItemRepository,
+            IOrderRepository orderRepository,
             IProductsReportRepository productsReportRepository,
             IProductsReportFactory productsReportFactory)
         {
             _productRepository = productRepository;
-            _orderItemRepository = orderItemRepository;
+            _orderRepository = orderRepository;
             _productsReportRepository = productsReportRepository;
             _productsReportFactory = productsReportFactory;
         }
@@ -32,12 +32,14 @@ namespace DShop.Services.Sales.Services
 
         public async Task CreateAsync(Guid id, int maxRank)
         {
+            var products = _productRepository.GetAllAsync();
+            var orders = _orderRepository.GetAllAsync();
+            await Task.WhenAll(products, orders);
             var report = _productsReportFactory.Create(id,
-                await _productRepository.GetAllAsync(),
-                await _orderItemRepository.GetAllAsync(), maxRank);
+                products.Result.ToList(), orders.Result.ToList(), maxRank);
             await _productsReportRepository.AddAsync(report);
         }
-        
+
         private static ProductsReportDto Map(ProductsReport report)
             => report == null
                 ? null

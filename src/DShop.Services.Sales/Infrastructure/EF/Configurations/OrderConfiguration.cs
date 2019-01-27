@@ -11,6 +11,7 @@ namespace DShop.Services.Sales.Infrastructure.EF.Configurations
             builder.Property(p => p.Id).HasAggregateIdConversion();
             builder.Property(p => p.CustomerId).HasAggregateIdConversion();
             builder.HasOne<Customer>().WithMany().HasForeignKey(p => p.CustomerId);
+            builder.HasMany(o => o.Items);
         }
     }
 }

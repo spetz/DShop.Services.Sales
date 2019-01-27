@@ -7,9 +7,10 @@ namespace DShop.Services.Sales.Core.Services
     public class ProductSalesCalculator : IProductSalesCalculator
     {
         public IEnumerable<ProductSales> Calculate(IEnumerable<Product> products,
-            IEnumerable<OrderItem> orderItems)
+            IEnumerable<Order> orders)
             => from product in products
-                let totalSales = orderItems
+                let totalSales = orders
+                    .SelectMany(o => o.Items)
                     .Where(i => i.ProductId.Equals(product.Id))
                     .Sum(i => i.Quantity)
                 select new ProductSales(product.Id, totalSales);

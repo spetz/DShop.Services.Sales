@@ -6,6 +6,6 @@ namespace DShop.Services.Sales.Core.Services
     public interface IProductSalesCalculator
     {
         IEnumerable<ProductSales> Calculate(IEnumerable<Product> products,
-            IEnumerable<OrderItem> orderItems);
+            IEnumerable<Order> orders);
     }
 }

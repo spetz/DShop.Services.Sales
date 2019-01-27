@@ -1,7 +1,9 @@
+using System;
+
 namespace DShop.Services.Sales.Core.Domain
 {
     //Value object
-    public class ProductRank
+    public class ProductRank : IEquatable<ProductRank>
     {
         public AggregateId Id { get; }
         public string Name { get; }
@@ -25,6 +27,26 @@ namespace DShop.Services.Sales.Core.Domain
             Rank = rank;
             TotalSales = totalSales;
             TotalEarnings = totalEarnings;
+        }
+
+        public bool Equals(ProductRank other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(Id, other.Id);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ProductRank) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Id != null ? Id.GetHashCode() : 0);
         }
     }
 }

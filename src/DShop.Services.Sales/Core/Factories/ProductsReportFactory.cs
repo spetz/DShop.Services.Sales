@@ -15,21 +15,21 @@ namespace DShop.Services.Sales.Core.Factories
             _salesCalculator = salesCalculator;
         }
         
-        public ProductsReport Create(AggregateId id, IEnumerable<Product> products,
-            IEnumerable<OrderItem> orderItems, int maxRank)
+        public ProductsReport Create(AggregateId id, IReadOnlyCollection<Product> products,
+            IReadOnlyCollection<Order> orders, int maxRank)
         {
             if (products == null || !products.Any())
             {
                 throw new EmptyProductsException();
             }
 
-            if (orderItems == null || !orderItems.Any())
+            if (orders == null || !orders.Any())
             {
-                throw new EmptyOrderItemsException();
+                throw new EmptyOrdersException();
             }
 
             maxRank = maxRank > 0 ? maxRank : 3;
-            var productsSales = _salesCalculator.Calculate(products, orderItems);
+            var productsSales = _salesCalculator.Calculate(products, orders);
             var rankings = new List<ProductRank>();
             var currentRank = 1;
             foreach (var sales in productsSales.OrderByDescending(p => p.TotalSales))

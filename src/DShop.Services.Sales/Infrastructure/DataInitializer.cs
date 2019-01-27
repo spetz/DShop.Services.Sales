@@ -15,21 +15,18 @@ namespace DShop.Services.Sales.Infrastructure
         private readonly ICustomerRepository _customerRepository;
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrderItemRepository _orderItemRepository;
         private readonly IOptions<ApplicationOptions> _applicationOptions;
         private readonly ILogger<DataInitializer> _logger;
 
         public DataInitializer(ICustomerRepository customerRepository,
             IProductRepository productRepository,
             IOrderRepository orderRepository,
-            IOrderItemRepository orderItemRepository,
             IOptions<ApplicationOptions> applicationOptions,
             ILogger<DataInitializer> logger)
         {
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _orderRepository = orderRepository;
-            _orderItemRepository = orderItemRepository;
             _applicationOptions = applicationOptions;
             _logger = logger;
         }
@@ -58,14 +55,11 @@ namespace DShop.Services.Sales.Infrastructure
                 await _productRepository.AddAsync(product);
             }
 
-            var orders = GetOrders(customers).ToList();
+            var orders = GetOrders(customers, products).ToList();
             foreach (var order in orders)
             {
                 await _orderRepository.AddAsync(order);
             }
-
-            var orderItems = GetOrderItems(orders, products).ToList();
-            await _orderItemRepository.AddAsync(orderItems);
 
             _logger.LogInformation("Data initialized.");
         }
@@ -86,11 +80,15 @@ namespace DShop.Services.Sales.Infrastructure
             yield return new Product(new AggregateId(), "Mi 8", "Xiaomi", 2200);
         }
 
-        private IEnumerable<Order> GetOrders(IEnumerable<Customer> customers)
-            => customers.Select(c => new Order(new AggregateId(), c.Id));
+        private IEnumerable<Order> GetOrders(IList<Customer> customers, IList<Product> products)
+            => customers.Select(c =>
+            {
+                var orderId = new AggregateId();
+                return new Order(orderId, c.Id, GetOrderItems(orderId, products));
+            });
 
-        private IEnumerable<OrderItem> GetOrderItems(IEnumerable<Order> orders, IEnumerable<Product> products)
-            => orders.SelectMany(o => products.Take(_random.Next(products.Count() / 2, products.Count() + 1))
-                .Select(p => new OrderItem(o.Id, p.Id, p.Price, _random.Next(1, 10))));
+        private IEnumerable<OrderItem> GetOrderItems(AggregateId orderId, IList<Product> products)
+            => products.Take(_random.Next(products.Count() / 2, products.Count() + 1))
+                .Select(p => new OrderItem(orderId, p.Id, p.Price, _random.Next(1, 10)));
     }
 }

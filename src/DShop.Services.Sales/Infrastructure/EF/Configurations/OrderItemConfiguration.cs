@@ -11,8 +11,7 @@ namespace DShop.Services.Sales.Infrastructure.EF.Configurations
             builder.HasKey(p => new {p.OrderId, p.ProductId});
             builder.Property(p => p.ProductId).HasAggregateIdConversion();
             builder.Property(p => p.OrderId).HasAggregateIdConversion();
-            builder.HasOne<Order>().WithMany().HasForeignKey(p => p.OrderId);
-            builder.HasOne<Product>().WithMany().HasForeignKey(p => p.ProductId);
+            builder.HasOne<Order>().WithMany(o => o.Items).HasForeignKey(p => p.OrderId);
         }
     }
 }

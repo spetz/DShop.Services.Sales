@@ -5,7 +5,7 @@ namespace DShop.Services.Sales.Core.Factories
 {
     public interface IProductsReportFactory
     {
-        ProductsReport Create(AggregateId id, IEnumerable<Product> products,
-            IEnumerable<OrderItem> orderItems, int maxRank);
+        ProductsReport Create(AggregateId id, IReadOnlyCollection<Product> products,
+            IReadOnlyCollection<Order> orders, int maxRank);
     }
 }

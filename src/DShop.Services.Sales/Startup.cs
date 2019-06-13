@@ -59,7 +59,8 @@ namespace DShop.Services.Sales
             app.UseErrorHandler();
             app.UseMvc();
             app.UseRabbitMq()
-                .SubscribeEvent<ProductCreated>();
+                .SubscribeEvent<ProductCreated>()
+                .SubscribeEvent<ProductDeleted>();
 
             lifetime.ApplicationStopped.Register(() => Container.Dispose());
             dataSeeder.SeedAsync().Wait();

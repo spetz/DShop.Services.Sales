@@ -3,8 +3,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DShop.Common.Dispatchers;
 using DShop.Common.Mvc;
+using DShop.Common.RabbitMq;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Infrastructure.EF;
+using DShop.Services.Sales.Services.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,7 @@ namespace DShop.Services.Sales
             builder.Populate(services);
             builder.AddDispatchers();
             builder.RegisterModule<InfrastructureModule>();
+            builder.AddRabbitMq();
 
             Container = builder.Build();
 
@@ -55,6 +58,8 @@ namespace DShop.Services.Sales
 
             app.UseErrorHandler();
             app.UseMvc();
+            app.UseRabbitMq()
+                .SubscribeEvent<ProductCreated>();
 
             lifetime.ApplicationStopped.Register(() => Container.Dispose());
             dataSeeder.SeedAsync().Wait();

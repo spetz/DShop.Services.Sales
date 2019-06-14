@@ -4,8 +4,11 @@ using Autofac.Extensions.DependencyInjection;
 using DShop.Common.Dispatchers;
 using DShop.Common.Mvc;
 using DShop.Common.RabbitMq;
+using DShop.Common.RestEase;
 using DShop.Services.Sales.Infrastructure;
 using DShop.Services.Sales.Infrastructure.EF;
+using DShop.Services.Sales.Services;
+using DShop.Services.Sales.Services.Commands;
 using DShop.Services.Sales.Services.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +34,7 @@ namespace DShop.Services.Sales
             services.Configure<ApplicationOptions>(Configuration.GetSection("application"));
             services.Configure<SqlOptions>(Configuration.GetSection("sql"));
             services.AddEntityFramework();
+            services.RegisterServiceForwarder<IOrdersServiceClient>("orders-service");
 
             return BuildContainer(services);
         }
@@ -59,8 +63,10 @@ namespace DShop.Services.Sales
             app.UseErrorHandler();
             app.UseMvc();
             app.UseRabbitMq()
+                .SubscribeCommand<CreateProductsReport>()
                 .SubscribeEvent<ProductCreated>()
                 .SubscribeEvent<ProductDeleted>();
+//                .SubscribeEvent<OrderCreated>();
 
             lifetime.ApplicationStopped.Register(() => Container.Dispose());
             dataSeeder.SeedAsync().Wait();
